@@ -1,6 +1,7 @@
-## Spring Reactive examples
+## Начало работы с ReactiveMongo для Spring Data
 
-This repository contains a source code, that accompanies posts on reactive Spring (Webflux/ReactiveMongoDB).
+* `Tutorial`: https://dev.to/iuriimednikov/how-to-build-custom-queries-with-spring-data-reactive-mongodb-1802
+* `Repo`: https://github.com/mednikoviurii/spring-reactive-examples
 
 ## Posts
 
@@ -15,8 +16,7 @@ TBD
 
 ## Installation instructions
 
-TBD
-
-## Copyrights
-
-(c) Iurii Mednikov, 2020
+- `Java 11`
+- `collection = "users"`: User
+- `WebRouter -> PersonHandler`: PersonApiTest
+- `PersonServiceImpl`: PersonServiceImplTest

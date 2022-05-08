@@ -9,8 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
-@Value @AllArgsConstructor
 @Document(collection = "users")
+@Value
+@AllArgsConstructor
 public class User {
 
     @NonFinal @Id String userId;
