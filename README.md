@@ -21,4 +21,4 @@ TBD
 - `WebRouter -> PersonHandler`: PersonApiTest
 - `PersonServiceImpl -> PersonRepository -> ReactiveCrudRepository`: PersonServiceImplTest
 - `CustomUserRepositoryImpl -> ReactiveMongoTemplate`: UserServiceImplTest
-
+- **(** `PostClientImpl -> WebClient`: PostClientImplTest **)**
