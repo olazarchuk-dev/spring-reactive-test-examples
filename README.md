@@ -19,4 +19,6 @@ TBD
 - `Java 11`
 - `collection = "users"`: User
 - `WebRouter -> PersonHandler`: PersonApiTest
-- `PersonServiceImpl`: PersonServiceImplTest
+- `PersonServiceImpl -> PersonRepository -> ReactiveCrudRepository`: PersonServiceImplTest
+- `CustomUserRepositoryImpl -> ReactiveMongoTemplate`: UserServiceImplTest
+
