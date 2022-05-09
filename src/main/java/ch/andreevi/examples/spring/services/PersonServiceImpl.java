@@ -27,7 +27,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Mono<Person> findById(String id) {
-        return this.repository.findById(id);
+//        return this.repository.findById(id);
+
+        var person = repository.findById(id);
+        return person;
     }
 
     @Override
