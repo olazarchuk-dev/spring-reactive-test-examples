@@ -25,7 +25,10 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     public Mono<User> changePassword(String userId, String newPassword) {
         Query query = new Query(Criteria.where("userId").is(userId));
         Update update = new Update().set("password", newPassword);
-        return mongoTemplate.findAndModify(query, update, User.class);
+//        return mongoTemplate.findAndModify(query, update, User.class);
+
+        var user = mongoTemplate.findAndModify(query, update, User.class);
+        return user;
     }
 
     @Override

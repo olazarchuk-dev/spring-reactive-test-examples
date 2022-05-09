@@ -20,9 +20,11 @@ import static org.assertj.core.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-    @InjectMocks private UserServiceImpl service; // TODO: Этот класс (бин), который должен быть явно вызван и протестирован
+    @InjectMocks
+    private UserServiceImpl service; // TODO: Этот класс (бин), который должен быть явно вызван и протестирован
 
-    @Mock private UserRepository repository; // TODO: Это связанный класс(ы) не должен явно вызываться, но он привязан к тестируемому классу (здесь просто указываем ожидаемый результат...)
+    @Mock
+    private UserRepository repository; // TODO: Это связанный класс(ы) не должен явно вызываться, но он привязан к тестируемому классу (здесь просто указываем ожидаемый результат...)
 
     @Test
     void createUserTest() {

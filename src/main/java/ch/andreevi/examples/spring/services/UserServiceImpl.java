@@ -32,7 +32,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> changePassword(String userId, String password) {
-        return this.repository.changePassword(userId, password);
+//        return this.repository.changePassword(userId, password);
+
+        var user = repository.changePassword(userId, password);
+        return user;
     }
 
 }

@@ -7,7 +7,7 @@ import ch.andreevi.examples.spring.models.User;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface UserRepository extends ReactiveMongoRepository<User, String>, CustomUserRepository{
+public interface UserRepository extends ReactiveMongoRepository<User, String>, CustomUserRepository {
     // derived query method
     Mono<User> findByEmail (String email);
 }
