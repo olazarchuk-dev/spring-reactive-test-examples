@@ -19,11 +19,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PersonServiceImplTest {
 
-    @Mock
-    private PersonRepository repository; // TODO: Этот класс не должен явно вызываться, но он привязан к тестируемому классу (здесь просто указываем ожидаемый результат...)
-
     @InjectMocks
     private PersonServiceImpl service; // TODO: Этот класс (бин), который должен быть явно вызван и протестирован
+
+    @Mock
+    private PersonRepository repository; // TODO: Это связанный класс(ы) не должен явно вызываться, но он привязан к тестируемому классу (здесь просто указываем ожидаемый результат...)
 
     @Test
     void createPersonTest() {
@@ -45,19 +45,18 @@ class PersonServiceImplTest {
         // 1.2 Мокаю параметр передаваемый в запросе для репозитория И привязываю к нему ожидаемый результат из репозитория
         String expectedRequest = "someId";
         when( repository.findById(expectedRequest) )
-                .thenReturn(expectedResponse);
+                .thenReturn( expectedResponse );
 
         //  THEN
         // 2.1 Делаю явный вызов тестируемого класса (бина)
         StepVerifier.create( service.findById(expectedRequest) )
                 // 2.2 Проверяю ожидаемые результаты для тестируемого класса (бина)
-                .assertNext(person -> {
-                    assertThat(person).hasNoNullFieldsOrProperties();
-                    assertThat(person.getId()).isEqualTo("someId");
-                    assertThat(person.getFirstName()).isEqualTo("John");
-                    assertThat(person.getLastName()).isEqualTo("Doe");
-                    assertThat(person.getAge()).isEqualTo(28);
-                })
+                .assertNext(person -> assertThat(person)
+                        .isNotNull()
+                        .hasFieldOrPropertyWithValue("id", "someId")
+                        .hasFieldOrPropertyWithValue("firstName", "John")
+                        .hasFieldOrPropertyWithValue("lastName", "Doe")
+                        .hasFieldOrPropertyWithValue("age", 28))
                 .verifyComplete();
     }
 

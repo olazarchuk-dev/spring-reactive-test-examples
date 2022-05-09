@@ -20,8 +20,9 @@ import static org.assertj.core.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-    @InjectMocks private UserServiceImpl service;
-    @Mock private UserRepository repository;
+    @InjectMocks private UserServiceImpl service; // TODO: Этот класс (бин), который должен быть явно вызван и протестирован
+
+    @Mock private UserRepository repository; // TODO: Это связанный класс(ы) не должен явно вызываться, но он привязан к тестируемому классу (здесь просто указываем ожидаемый результат...)
 
     @Test
     void createUserTest() {
@@ -39,7 +40,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findUserByIdSuccessTest(){
+    void findUserByIdSuccessTest() {
         User entity = User.dummy();
         String userId = entity.getUserId();
         Mono<User> source = Mono.just(entity);
@@ -54,7 +55,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findUserByIdFailureTest(){
+    void findUserByIdFailureTest() {
         String userId = "no-such-user-id";
         Mono<User> source = Mono.empty();
         when(repository.findById(userId)).thenReturn(source);
@@ -63,16 +64,27 @@ class UserServiceImplTest {
 
     @Test
     void changePasswordTest() {
-        String userId = "userId";
-        String password = "password";
-        Mono<User> source = Mono.just(User.dummy());
-        when(repository.changePassword(userId, password)).thenReturn(source);
-        StepVerifier.create(service.changePassword(userId, password))
-            .assertNext(user -> assertThat(user)
-                .isNotNull()
-                .hasFieldOrPropertyWithValue("email", "email")
-                .hasFieldOrPropertyWithValue("userId", "userId")
-                .hasFieldOrPropertyWithValue("password", "password")
-                .hasNoNullFieldsOrPropertiesExcept("roles")).verifyComplete();
+        //  GIVEN
+        // 1.1 Мокаю результат возвращаемый из репозитория (UserRepository), которые якобы ожидаются из БД (MongoDB)
+        Mono<User> expectedResponse = Mono.just(User.dummy());
+
+        //  WHEN
+        // 1.2 Мокаю параметр передаваемый в запросе для репозитория И привязываю к нему ожидаемый результат из репозитория
+        String requestUserId = "userId";
+        String requestPassword = "password";
+        when( repository.changePassword(requestUserId, requestPassword) )
+                .thenReturn( expectedResponse );
+
+        //  THEN
+        // 2.1 Делаю явный вызов тестируемого класса (бина)
+        StepVerifier.create( service.changePassword(requestUserId, requestPassword) )
+                // 2.2 Проверяю ожидаемые результаты для тестируемого класса (бина)
+                .assertNext(user -> assertThat(user)
+                    .isNotNull()
+                    .hasFieldOrPropertyWithValue("email", "email")
+                    .hasFieldOrPropertyWithValue("userId", "userId")
+                    .hasFieldOrPropertyWithValue("password", "password")
+                    .hasNoNullFieldsOrPropertiesExcept("roles"))
+            .verifyComplete();
     }
 }
